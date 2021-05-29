@@ -158,7 +158,24 @@ public class AddressBook {
 
 		}
 	}
-
+	static void CountCity(Map<String, AddressMethods> addressbookMap, String city) {
+		long count = 0;
+		for (AddressMethods iterator : addressbookMap.values()) {
+			ArrayList<ContactInfo> addressBooks = iterator.addressBook;
+			long count1 = addressBooks.stream().filter(s -> s.getCity().equalsIgnoreCase(city)).count();
+			count = count1;
+		}
+		 System.out.println("Person=" + count);
+	}
+	static void CountState(Map<String, AddressMethods> addressbookMap, String state) {
+		long count = 0;
+		for (AddressMethods iterator : addressbookMap.values()) {
+			ArrayList<ContactInfo> addressBooks = iterator.addressBook;
+			long count1 = addressBooks.stream().filter(s -> s.getState().equalsIgnoreCase(state)).count();
+			count = count1;
+		}
+		 System.out.println("Person=" + count);
+	}
 
 		
 	}
