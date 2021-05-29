@@ -15,6 +15,7 @@ public class AddressBook {
 			System.out.println("Press 2 : Edit Contact");
 			System.out.println("Press 3 : Print Contact");
 			System.out.println("Press 4 : Delete Contact");
+			System.out.println("Press 5 : Sort Contact By Name");
 			System.out.println("Press 0 : Exit");
 			Scanner scanner = new Scanner(System.in);
 			int choice = scanner.nextInt();
@@ -30,6 +31,9 @@ public class AddressBook {
 				break;
 			case 4:
 				addressMethod.Delete();
+				break;
+			case 5:
+				addressMethod.sortByName();
 				break;
 			case 0:
 				return;
@@ -67,6 +71,8 @@ public class AddressBook {
 			System.out.println("Press 2: Search Name By state");
 			System.out.println("Press 3: Search all contacts in city");
 			System.out.println("Press 4: Search all contacts in state");
+			System.out.println("Press 5: Count in city");
+			System.out.println("Press 6: Count in State");
 			System.out.println("Press 0: Exit");
 			int choice = scanner.nextInt();
 			switch (choice) {
@@ -94,9 +100,19 @@ public class AddressBook {
 				SearchINCity(addressbookMap, City);
 				break;
 			case 4:
-				System.out.println("Enter city for search");
+				System.out.println("Enter state for search");
 				String State = scanner.next();
 				SearchINState(addressbookMap, State);
+				break;
+			case 5:
+				System.out.println("Enter city for search");
+				String cityCount = scanner.next();
+				CountCity(addressbookMap, cityCount);
+				break;
+			case 6:
+				System.out.println("Enter State for search");
+				String stateCount = scanner.next();
+				CountState(addressbookMap, stateCount);
 				break;
 			case 0:
 				return;
@@ -136,17 +152,20 @@ public class AddressBook {
 	}
 
 	static void SearchINCity(Map<String, AddressMethods> addressbookMap, String city) {
+
 		for (AddressMethods iterator : addressbookMap.values()) {
 			ArrayList<ContactInfo> addressBooks = iterator.addressBook;
 			addressBooks.stream().forEach(addressBook -> {
-				if (addressBook.getCity().equalsIgnoreCase(city))
+
+				if (addressBook.getCity().equalsIgnoreCase(city)) {
 					System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name());
 
+				}
 			});
 
 		}
 	}
-	
+
 	static void SearchINState(Map<String, AddressMethods> addressbookMap, String state) {
 		for (AddressMethods iterator : addressbookMap.values()) {
 			ArrayList<ContactInfo> addressBooks = iterator.addressBook;
@@ -158,6 +177,7 @@ public class AddressBook {
 
 		}
 	}
+
 	static void CountCity(Map<String, AddressMethods> addressbookMap, String city) {
 		long count = 0;
 		for (AddressMethods iterator : addressbookMap.values()) {
@@ -165,8 +185,9 @@ public class AddressBook {
 			long count1 = addressBooks.stream().filter(s -> s.getCity().equalsIgnoreCase(city)).count();
 			count = count1;
 		}
-		 System.out.println("Person=" + count);
+		System.out.println("Person=" + count);
 	}
+
 	static void CountState(Map<String, AddressMethods> addressbookMap, String state) {
 		long count = 0;
 		for (AddressMethods iterator : addressbookMap.values()) {
@@ -174,10 +195,8 @@ public class AddressBook {
 			long count1 = addressBooks.stream().filter(s -> s.getState().equalsIgnoreCase(state)).count();
 			count = count1;
 		}
-		 System.out.println("Person=" + count);
+		System.out.println("Person=" + count);
 	}
-
-		
 	}
 
 
