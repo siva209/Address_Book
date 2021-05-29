@@ -145,5 +145,66 @@ public class AddressMethods {
 
 		Show(sortedAddressBook);
 	}
+	
+
+	public void sortByCity() {
+
+		List<String> unsortedArrayCity = new ArrayList<>();
+		for (ContactInfo iterator : addressBook) {
+			unsortedArrayCity.add(iterator.getCity());
+		}
+		Stream<String> sorted = unsortedArrayCity.stream().sorted();
+		List<String> sortedCity = sorted.collect(Collectors.toList());
+
+		List<ContactInfo> sortedAddressBook = new ArrayList<ContactInfo>();
+		for (String sortedCitys : sortedCity) {
+			for (ContactInfo iterator : addressBook) {
+				if (sortedCitys.equals(iterator.getCity()))
+					sortedAddressBook.add(iterator);
+			}
+		}
+
+		Show(sortedAddressBook);
+	}
+
+	public void sortByState() {
+
+		List<String> unsortedArrayState = new ArrayList<>();
+		for (ContactInfo iterator : addressBook) {
+			unsortedArrayState.add(iterator.getState());
+		}
+		Stream<String> sorted = unsortedArrayState.stream().sorted();
+		List<String> sortedState = sorted.collect(Collectors.toList());
+
+		List<ContactInfo> sortedAddressBook = new ArrayList<ContactInfo>();
+		for (String sortedStates : sortedState) {
+			for (ContactInfo iterator : addressBook) {
+				if (sortedStates.equals(iterator.getState()))
+					sortedAddressBook.add(iterator);
+			}
+		}
+
+		Show(sortedAddressBook);
+	}
+
+	public void sortByZip() {
+
+		List<String> unsortedArrayZip = new ArrayList<>();
+		for (ContactInfo iterator : addressBook) {
+			unsortedArrayZip.add(iterator.getZip());
+		}
+		Stream<String> sorted = unsortedArrayZip.stream().sorted();
+		List<String> sortedZip = sorted.collect(Collectors.toList());
+
+		List<ContactInfo> sortedAddressBook = new ArrayList<ContactInfo>();
+		for (String sortedZips : sortedZip) {
+			for (ContactInfo iterator : addressBook) {
+				if (sortedZips.equals(iterator.getZip()))
+					sortedAddressBook.add(iterator);
+			}
+		}
+
+		Show(sortedAddressBook);
+	}
 
 }
