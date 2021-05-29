@@ -8,8 +8,14 @@ public class AddressMethods {
 	ArrayList<ContactInfo> addressBook = new ArrayList<ContactInfo>();
 
 	void Add() {
+		boolean flag = true;
 		ContactInfo address = new ContactInfo();
-		addressBook.add(address);
+		for (ContactInfo iterator : addressBook) {
+			if (iterator.getFirst_Name().equalsIgnoreCase(address.getFirst_Name()))
+				flag = false;
+		}
+		if (flag)
+			addressBook.add(address);
 	}
 
 	void Show() {
@@ -27,7 +33,7 @@ public class AddressMethods {
 	}
 
 	void Edit() {
-		Scanner scanner= new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter the name whose deatils need to change  ");
 		String name = scanner.nextLine();
 		System.out.println("Enter the detail you have to edit");
@@ -97,6 +103,7 @@ public class AddressMethods {
 			}
 		}
 	}
+
 	void Delete() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter the Name whose data to delete");
