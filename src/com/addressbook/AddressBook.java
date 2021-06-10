@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
+
 
 
 public class AddressBook {
 
+	AddressMethods addressMethod=new AddressMethods();
 	void address_Book(AddressMethods addressMethod) {
 		while (true) {
 			System.out.println("Press 1 : Add Contact");
@@ -24,20 +25,20 @@ public class AddressBook {
 			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
-				addressMethod.Add();
+				addressMethod.add();
 				break;
 			case 2:
-				addressMethod.Edit();
+				addressMethod.edit();
 				break;
 			case 3:
-				addressMethod.Show();
+				addressMethod.show();
 				break;
 			case 4:
-				addressMethod.Delete();
+				addressMethod.delete();
 				break;
 			case 5:
 				addressMethod.sortByName();
-				break;
+				
 			case 6:
 				addressMethod.sortByCity();
 				break;
@@ -57,11 +58,12 @@ public class AddressBook {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address book");
+		// AddressMethods address=new AddressMethods();
 		Map<String, AddressMethods> addressbookMap = new HashMap<String, AddressMethods>();
 		String name = null;
 		while (true) {
 
-			System.out.println("Enter the Address Book Name");
+			System.out.println("Enter the Address book name");
 			Scanner scanner = new Scanner(System.in);
 			name = scanner.nextLine();
 			AddressMethods addressMethods = addressbookMap.get(name);
@@ -79,136 +81,67 @@ public class AddressBook {
 		}
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			System.out.println("Press 1: Search Name By city");
-			System.out.println("Press 2: Search Name By state");
-			System.out.println("Press 3: Search all contacts in city");
-			System.out.println("Press 4: Search all contacts in state");
-			System.out.println("Press 5: Count in city");
-			System.out.println("Press 6: Count in State");
+			System.out.println("Press 1: Search By city");
+			System.out.println("Press 2: Search By state");
 			System.out.println("Press 0: Exit");
 			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
-				System.out.println("Enter city for Search");
+				System.out.println("Enter city for search");
 				String city = scanner.next();
 				System.out.println("Enter first name");
 				String firstName = scanner.next();
 				System.out.println("Enter last name");
 				String lastName = scanner.next();
-				SearchPersonINCity(addressbookMap, city, firstName, lastName);
+				SearchCity(addressbookMap, city, firstName, lastName);
 				break;
 			case 2:
-				System.out.println("Enter state for Search");
+				System.out.println("Enter state for search");
 				String state = scanner.next();
 				System.out.println("Enter first name");
 				String FirstName = scanner.next();
 				System.out.println("Enter last name");
 				String LastName = scanner.next();
-				SearchPersonInState(addressbookMap, state, FirstName, LastName);
-				break;
-			case 3:
-				System.out.println("Enter city for Search");
-				String City = scanner.next();
-				SearchINCity(addressbookMap, City);
-				break;
-			case 4:
-				System.out.println("Enter state for Search");
-				String State = scanner.next();
-				SearchINState(addressbookMap, State);
-				break;
-			case 5:
-				System.out.println("Enter city for Search");
-				String cityCount = scanner.next();
-				CountCity(addressbookMap, cityCount);
-				break;
-			case 6:
-				System.out.println("Enter State for Search");
-				String stateCount = scanner.next();
-				CountState(addressbookMap, stateCount);
+				SearchState(addressbookMap, state, FirstName, LastName);
 				break;
 			case 0:
 				return;
 			default:
-				System.out.println("Please Enter Valid choise ");
+				System.out.println("Please Enter Correct choise ");
 			}
 		}
 	}
 
-	static void SearchPersonINCity(Map<String, AddressMethods> addressbookMap, String city, String firstName,
-			String lastName) {
+	static void SearchCity(Map<String, AddressMethods> addressbookMap, String city, String firstName, String lastName) {
 		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
-			addressBooks.stream().forEach(addressBook -> {
+			ArrayList<ContactInfo> addressBooks = (ArrayList<ContactInfo>) iterator.addressBook;
+			  addressBooks.stream().forEach(addressBook -> {
 				if (addressBook.getCity().equalsIgnoreCase(city))
 					if (addressBook.getFirst_Name().equalsIgnoreCase(firstName))
 						if (addressBook.getLast_Name().equalsIgnoreCase(lastName))
-							System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name());
+							System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name() +" is in  "+addressBook.getCity());
+						else
+							System.out.println("No person of name " + firstName + " " + lastName + " is present in "+city);
 
 			});
-
 		}
 	}
 
-	static void SearchPersonInState(Map<String, AddressMethods> addressbookMap, String state, String firstName,
-			String lastName) {
+	static void SearchState(Map<String, AddressMethods> addressbookMap, String state, String firstName,String lastName) {
 		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
+			ArrayList<ContactInfo> addressBooks = (ArrayList<ContactInfo>) iterator.addressBook;
 			addressBooks.stream().forEach(addressBook -> {
 				if (addressBook.getState().equalsIgnoreCase(state))
 					if (addressBook.getFirst_Name().equalsIgnoreCase(firstName))
 						if (addressBook.getLast_Name().equalsIgnoreCase(lastName))
-							System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name());
-			});
-
-		}
-	}
-
-	static void SearchINCity(Map<String, AddressMethods> addressbookMap, String city) {
-
-		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
-			addressBooks.stream().forEach(addressBook -> {
-
-				if (addressBook.getCity().equalsIgnoreCase(city)) {
-					System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name());
-
-				}
-			});
-
-		}
-	}
-
-	static void SearchINState(Map<String, AddressMethods> addressbookMap, String state) {
-		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
-			addressBooks.stream().forEach(addressBook -> {
-				if (addressBook.getState().equalsIgnoreCase(state))
-					System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name());
+							System.out.println(addressBook.getFirst_Name() + " " + addressBook.getLast_Name() +" is in  "+addressBook.getState());
+						else
+							System.out.println("No person of name " + firstName + " " + lastName + " is present in "+state);
 
 			});
-
 		}
 	}
-
-	static void CountCity(Map<String, AddressMethods> addressbookMap, String city) {
-		long count = 0;
-		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
-			long count1 = addressBooks.stream().filter(s -> s.getCity().equalsIgnoreCase(city)).count();
-			count = count1;
-		}
-		System.out.println("Person=" + count);
-	}
-
-	static void CountState(Map<String, AddressMethods> addressbookMap, String state) {
-		long count = 0;
-		for (AddressMethods iterator : addressbookMap.values()) {
-			Set<ContactInfo> addressBooks = iterator.addressBook;
-			long count1 = addressBooks.stream().filter(s -> s.getState().equalsIgnoreCase(state)).count();
-			count = count1;
-		}
-		System.out.println("Person=" + count);
-	}
+	
 }
 
 
